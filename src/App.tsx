@@ -10,21 +10,17 @@ function App() {
           center={[-31.4201, -64.1888]}
           zoom={13}
           scrollWheelZoom={false}
-          className="w-full h-full"
+          className="h-full w-full"
         >
           <TileLayer
             attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
-          {
-            response.paradas.map((parada) => (
-              <Marker position={[parada.lat, parada.lon]} key={parada.codigo}>
-                <Popup>
-                  {`${parada.parada_nombre}`}
-                </Popup>
-              </Marker>
-            ))
-          }
+          {response.paradas.map((parada) => (
+            <Marker position={[parada.lat, parada.lon]} key={parada.codigo}>
+              <Popup>{`${parada.parada_nombre}`}</Popup>
+            </Marker>
+          ))}
         </MapContainer>
       </main>
     </ThemeProvider>
