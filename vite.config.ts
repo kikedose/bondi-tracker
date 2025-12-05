@@ -18,4 +18,26 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
+  server: {
+    proxy: {
+      '/usuario': {
+        target: 'https://micronauta4.dnsalias.net',
+        changeOrigin: true,
+        secure: false,
+        cookieDomainRewrite: 'localhost', // ⭐ Transform cookies for local use
+        configure: (proxy, _options) => {
+          proxy.on('error', (err, _req, _res) => {
+            console.log('proxy error', err);
+          });
+          proxy.on('proxyReq', (proxyReq, req, _res) => {
+            console.log('Sending Request:', req.method, req.url);
+            console.log('Proxy Target:', proxyReq.path);
+          });
+          proxy.on('proxyRes', (proxyRes, req, _res) => {
+            console.log('Received Response:', proxyRes.statusCode, req.url);
+          });
+        },
+      },
+    },
+  },
 });
